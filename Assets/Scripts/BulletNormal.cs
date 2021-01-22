@@ -6,10 +6,15 @@ public class BulletNormal : MonoBehaviour
 {
     public float destoryTime = 2.0f;
 
+    private void Start()
+    {
+        Destroy(gameObject, destoryTime);
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
         Debug.Log(collision.collider.name);
-        Destroy(gameObject, destoryTime);
         
+        Destroy(gameObject);
     }
 }

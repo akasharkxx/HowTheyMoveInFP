@@ -41,6 +41,9 @@ public class WeaponProjectile : MonoBehaviour
     [Header("Aniamtions")]
     public Animator gunAnimator;
 
+    [Header("Sounds")]
+    public AudioClip shootSound;
+
     private bool isReloading;
     private bool canShootNext;
     
@@ -48,10 +51,9 @@ public class WeaponProjectile : MonoBehaviour
     private int currentAmmo;
 
     private int isShootingHash;
-    
-    private float someTime;
 
     private Rigidbody weaponHolderRBody;
+    private AudioSource audioSource;
 
     private void Start()
     {
@@ -64,10 +66,12 @@ public class WeaponProjectile : MonoBehaviour
         //Rigidbodiy
         weaponHolderRBody = GetComponent<Rigidbody>();
 
+        //Audio Source
+        audioSource = GetComponent<AudioSource>();
+
         //Numbers
         currentAmmo = magzineAmmo;
         currentMaxAmmo = maxAmmo;
-        someTime = 0.0f;
 
         //bools
         isReloading = false;
@@ -136,6 +140,7 @@ public class WeaponProjectile : MonoBehaviour
         muzzlePrefab.SetActive(true);
 
         gunAnimator.SetBool(isShootingHash, true);
+        audioSource.PlayOneShot(shootSound, .8f);
 
         if (isAutoFireEnabled)
         {

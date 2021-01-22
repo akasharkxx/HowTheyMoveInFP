@@ -12,6 +12,7 @@ public class FirstPersonCharacterController : MonoBehaviour
     public float jumpHeight = 5.0f;
     public float gravityForce = 9.81f;
     public float groundDistance = 0.4f;
+    public float crouchScaleFactor = 0.25f;
     
     public LayerMask groundLayer;
 
@@ -48,14 +49,16 @@ public class FirstPersonCharacterController : MonoBehaviour
 
         if(isCrouchPressed)
         {
-            transform.localScale = Vector3.one * 0.25f;
+            if(transform.localScale.y >= crouchScaleFactor)
+            {
+                transform.localScale = new Vector3(transform.localScale.x, crouchScaleFactor, transform.localScale.z);
+            }
         }
         else
         {
-            transform.localScale += Vector3.one * 0.25f * Time.deltaTime;
-            if (transform.localScale.x > 1.0f || transform.localScale.y > 1f || transform.localScale.z > 1f)
+            if(transform.localScale.y < 1.0f)
             {
-                transform.localScale = Vector3.one;
+                transform.localScale += new Vector3(0f, 0.25f * Time.deltaTime, 0f);
             }
         }
 
